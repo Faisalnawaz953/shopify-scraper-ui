@@ -1,0 +1,18 @@
+.box {
+  width: 100%;
+  height: 50px;
+  margin-top: 50px;
+}
+
+.size {
+  width: 100%;
+  /* height: 200vh; */
+}
+.loader {
+  width: 100%;
+  height: 100vh;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
