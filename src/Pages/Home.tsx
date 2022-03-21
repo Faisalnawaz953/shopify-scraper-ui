@@ -12,10 +12,9 @@ function Home() {
   const clickHandler = () => {
     setLoading(true)
     axios
-      .get('http://localhost:8080/getAllProducts')
+      .get('http://localhost:8080/get-all-products')
       .then(() => {
         setLoading(false)
-        console.log('success')
         navigate('/charts')
       })
       .catch((err) => {

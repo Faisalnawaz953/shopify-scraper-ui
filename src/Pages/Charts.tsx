@@ -14,9 +14,8 @@ function Charts() {
   const [latestLaunchedProducts, setLatestLaunchedProducts] = useState<any>([])
   useEffect(() => {
     axios
-      .get('http://localhost:8080/getAllStores')
+      .get('http://localhost:8080/get-all-stores')
       .then((res) => {
-        console.log('res', res)
         setStores(res.data.payload.data)
         setselectedStores(res.data.payload.data[0])
         handleSelectStore(res.data.payload.data[0])
@@ -30,9 +29,8 @@ function Charts() {
       setLatestLaunchedProducts([])
       setselectedStores(e)
       axios
-        .post('http://localhost:8080/getJsonFiles', { store: e })
+        .post('http://localhost:8080/get-store-data', { store: e })
         .then((res) => {
-          console.log('res', res)
           setStoreData(res.data.payload.data)
           lastThreeMonth(res?.data?.payload?.data?.product_by_date)
         })
@@ -47,17 +45,12 @@ function Charts() {
   const lastThreeMonth = (products: any) => {
     setLatestLaunchedProducts([])
     let initalDate = new Date()
-    let threeMonthDate = new Date(initalDate.setMonth(initalDate.getMonth() - 3))
-    let currentDate = new Date()
+    const threeMonthDate = new Date(initalDate.setMonth(initalDate.getMonth() - 3))
+    const currentDate = new Date()
     products.map((product: any) => {
       let date = new Date(product.DATE)
       if (date.getTime() < currentDate.getTime() && date.getTime() > threeMonthDate.getTime()) {
-        console.log('product', product)
         setLatestLaunchedProducts((prevState: any) => [...prevState, product])
-        // let launchProducts:any = [...latestLaunchedProducts]
-        // launchProducts.push(product)
-        // console.log("launchProducts",launchProducts)
-        // setLatestLaunchedProducts(launchProducts)
       }
     })
   }
@@ -103,7 +96,9 @@ function Charts() {
           </Grid>
         </Paper>
         <Paper className="chartContainer">
-          <Typography variant="h5" className="chartHeading">Product Count</Typography>
+          <Typography variant="h5" className="chartHeading">
+            Product Count
+          </Typography>
           <div className="size">
             <HorizontalBar
               productTypeData={storeData?.product_by_type}
@@ -113,12 +108,13 @@ function Charts() {
           </div>
         </Paper>
         <Paper className="chartContainer">
-        <Typography variant="h5" className="chartHeading">Products launched in last 3 months</Typography>
+          <Typography variant="h5" className="chartHeading">
+            Products launched in last 3 months
+          </Typography>
           <div className="size">
             <BarChart latestLaunchedProducts={latestLaunchedProducts} />
           </div>{' '}
         </Paper>
-        
       </Container>
     </Layout>
   )

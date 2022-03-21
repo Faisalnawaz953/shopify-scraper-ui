@@ -43,8 +43,8 @@ export default function BarChart(props: any) {
       'December',
     ]
 
-    const d = new Date(date)
-    let name = month[d.getMonth()]
+    const launchedDate = new Date(date)
+    const name = month[launchedDate.getMonth()]
 
     return name
   }
